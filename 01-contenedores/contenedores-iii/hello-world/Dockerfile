@@ -1,0 +1,13 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+
+COPY . .
+
+EXPOSE 3000
+
+RUN ["npm", "install"]
+
+CMD ["npm", "start"]

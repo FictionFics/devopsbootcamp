@@ -1,0 +1,33 @@
+# --------- Base ---------
+
+FROM node:18-alpine As base
+
+WORKDIR /app
+
+# --------- Dependencies ---------
+FROM base AS dependencies
+
+COPY ["package.json", "package-lock.json", "./"]
+
+# --------- Tests ---------
+FROM dependencies AS test
+RUN npm ci
+COPY . . 
+RUN npm test
+
+# --------- Release ---------
+FROM base AS release
+
+WORKDIR /opt/app
+
+ENV NODE_ENV production
+
+# COPY ["package.json", "package-lock.json", "./"] --from=dependencies
+
+COPY . .
+
+RUN npm ci --only-production
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
