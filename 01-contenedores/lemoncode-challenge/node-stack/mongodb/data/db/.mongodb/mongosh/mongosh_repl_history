@@ -1,0 +1,29 @@
+db.Topics.insertOne({topicName:"Grafana"})
+db.Topics.find()
+db.collectionName.find(" ")
+db.collectionName.find( )
+db.collectionName.find()
+show collections
+use TopicstoreDb
+db.Topics.insertOne({Name:"Docker"})
+db.Topics.insertOne({Name:"Kubernetes"})
+db.Topics.insertOne({Name:"Grafana"})
+use TopicstoreDb
+show databases
+show.db
+show database
+db
+show db
+db.Topics.insertOne({Name:"Grafana"})
+use TopicstoreDb
+db.Topics.insertOne({topicName:"CI/CD"})
+db.Topics.insertOne({topicName:"Kibernetes"})
+db.Topics.insertOne({topicName:"Docker"})
+db.Topics.remove({})
+db.Topics.remove()
+db.Topics.remove
+use TopicstoreDb
+show collections
+use TopicstoreDb
+show databases
+show db

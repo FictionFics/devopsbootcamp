@@ -1,0 +1,37 @@
+version: '3.7'
+
+networks:
+  lemoncode-challenge:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:7.0.3
+    container_name: some-mongo
+    networks:
+      - lemoncode-challenge
+    volumes:
+      - ./mongodb/data/db:/data/db
+
+  backend:
+    image: lcchallenge-back:v0.0.1
+    container_name: topics-api
+    networks:
+      - lemoncode-challenge
+    environment:
+      - DATABASE_URL=mongodb://some-mongo:27017
+      - HOST=0.0.0.0
+    depends_on:
+      - mongodb
+
+  frontend:
+    image: lcchallenge-front:v0.0.1
+    container_name: frontend
+    ports:
+      - "8080:3000"
+    networks:
+      - lemoncode-challenge
+    environment:
+     - API_URI=http://topics-api:5000/api/topics
+    depends_on:
+      - backend
