@@ -81,9 +81,9 @@ mongosh
 use TopicstoreDb
 ```
 ```bash
-db.Topics.insertOne({Name:"Grafana"})
-db.Topics.insertOne({Name:"Kubernetes"})
-db.Topics.insertOne({Name:"Docker"})
+db.Topics.insertOne({topicName:"Grafana"})
+db.Topics.insertOne({topicName:"Kubernetes"})
+db.Topics.insertOne({topicName:"Docker"})
 ```
 
 - Let's create the backend container using the image built before, it is important the var **HOST** and **DATABASE_URL**
@@ -104,3 +104,51 @@ cbd3f4bd0e6a   lcchallenge-front:v0.0.1   "docker-entrypoint.s…"   16 hours ag
 0766a68aafe9   lcchallenge-back:v0.0.1    "docker-entrypoint.s…"   17 hours ago   Up 15 minutes   5000/tcp                 topics-api
 9064b22a6568   mongo:7.0.3                "docker-entrypoint.s…"   2 days ago     Up 15 minutes   27017/tcp                some-mongo
 ```
+
+## Docker Compose of the exercise
+- Create a docker compose file in the node-stack repo folder
+```bash
+touch docker-compose.yml
+```
+- Paste this into the compose file
+
+```yml
+version: '3.7'
+
+networks:
+  lemoncode-challenge:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:7.0.3
+    container_name: some-mongo
+    networks:
+      - lemoncode-challenge
+    volumes:
+      - ./mongodb/data/db:/data/db
+
+  backend:
+    image: lcchallenge-back:v0.0.1
+    container_name: topics-api
+    networks:
+      - lemoncode-challenge
+    environment:
+      - DATABASE_URL=mongodb://some-mongo:27017
+      - HOST=0.0.0.0
+    depends_on:
+      - mongodb
+
+  frontend:
+    image: lcchallenge-front:v0.0.1
+    container_name: frontend
+    ports:
+      - "8080:3000"
+    networks:
+      - lemoncode-challenge
+    environment:
+     - API_URI=http://topics-api:5000/api/topics
+    depends_on:
+      - backend
+```
+- **If you want to see content, remember to add information inside the mongodb container!!**
