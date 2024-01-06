@@ -10,17 +10,26 @@ touch Dockerfile.backend
 ```dockerfile
 # Dockerfile.backend
 
-FROM node:14
+# Dockerfile.backend
+FROM node:14 as builder
 
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
+WORKDIR /opt/build
 
 COPY . .
 
+RUN npm ci
+
+RUN run build 
+
+FROM node:14
+
+COPY --from=builder /opt/build/dist . 
+
+COPY ./*.json .
+
 EXPOSE 5000
 CMD ["npm", "start"]
+
 ```
 - In the same folder that you created the docker file execute this to build the image: 
 ```bash
@@ -152,3 +161,14 @@ services:
       - backend
 ```
 - **If you want to see content, remember to add information inside the mongodb container!!**
+
+- How to Start, stop and delete all the compose file
+
+Inside the folder where the compose is:
+```bash
+docker compose up
+
+docker compose stop
+
+docker compose down
+```
