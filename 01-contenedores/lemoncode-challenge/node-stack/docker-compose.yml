@@ -14,7 +14,7 @@ services:
       - ./mongodb/data/db:/data/db
 
   backend:
-    image: lcchallenge-back:v0.0.1
+    image: lcchallenge-back:v1.0.0
     container_name: topics-api
     networks:
       - lemoncode-challenge
@@ -25,7 +25,7 @@ services:
       - mongodb
 
   frontend:
-    image: lcchallenge-front:v0.0.1
+    image: lcchallenge-front:v1.0.0
     container_name: frontend
     ports:
       - "8080:3000"

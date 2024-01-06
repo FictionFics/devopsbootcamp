@@ -1,12 +1,19 @@
 # Dockerfile.backend
-FROM node:14
+FROM node:14 as builder
 
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
+WORKDIR /opt/build
 
 COPY . .
+
+RUN npm ci
+
+RUN run build 
+
+FROM node:14
+
+COPY --from=builder /opt/build/dist . 
+
+COPY ./*.json .
 
 EXPOSE 5000
 CMD ["npm", "start"]

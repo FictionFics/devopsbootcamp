@@ -89,19 +89,19 @@ db.Topics.insertOne({topicName:"Docker"})
 - Let's create the backend container using the image built before, it is important the var **HOST** and **DATABASE_URL**
 
 ```bash
-docker run -d --network lemoncode-challenge --name topics-api -e DATABASE_URL=mongodb://some-mongo:27017 -e HOST=0.0.0.0 lcchallenge-back:v0.0.1
+docker run -d --network lemoncode-challenge --name topics-api -e DATABASE_URL=mongodb://some-mongo:27017 -e HOST=0.0.0.0 lcchallenge-back:v1.0.0
 ```
 - Let's create the frontend container using the image built before, it is important the var **API_URI** and the port forwarding
 
 ```bash
-docker run -d --network lemoncode-challenge --name frontend -p 8080:3000 -e API_URI=http://topics-api:5000/api/topics lcchallenge-front:v0.0.1
+docker run -d --network lemoncode-challenge --name frontend -p 8080:3000 -e API_URI=http://topics-api:5000/api/topics lcchallenge-front:v1.0.0
 ```
 
 - You should have these 3 containers running with different ids:
 ```bash
   CONTAINER ID   IMAGE                      COMMAND                  CREATED        STATUS          PORTS                    NAMES
-cbd3f4bd0e6a   lcchallenge-front:v0.0.1   "docker-entrypoint.s…"   16 hours ago   Up 15 minutes   0.0.0.0:8080->3000/tcp   frontend
-0766a68aafe9   lcchallenge-back:v0.0.1    "docker-entrypoint.s…"   17 hours ago   Up 15 minutes   5000/tcp                 topics-api
+cbd3f4bd0e6a   lcchallenge-front:v1.0.0   "docker-entrypoint.s…"   16 hours ago   Up 15 minutes   0.0.0.0:8080->3000/tcp   frontend
+0766a68aafe9   lcchallenge-back:v1.0.0   "docker-entrypoint.s…"   17 hours ago   Up 15 minutes   5000/tcp                 topics-api
 9064b22a6568   mongo:7.0.3                "docker-entrypoint.s…"   2 days ago     Up 15 minutes   27017/tcp                some-mongo
 ```
 
@@ -129,7 +129,7 @@ services:
       - ./mongodb/data/db:/data/db
 
   backend:
-    image: lcchallenge-back:v0.0.1
+    image: lcchallenge-back:v1.0.0
     container_name: topics-api
     networks:
       - lemoncode-challenge
@@ -140,7 +140,7 @@ services:
       - mongodb
 
   frontend:
-    image: lcchallenge-front:v0.0.1
+    image: lcchallenge-front:v1.0.0
     container_name: frontend
     ports:
       - "8080:3000"
