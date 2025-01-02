@@ -8,22 +8,17 @@ spec:
   selector: 
     matchLabels:
       app: helloworld
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
         app: helloworld
         component: backend
-    spec:
-      volumes:
-      - name: config-volume 
-        configMap:
-          name: config          
+    spec:      
       containers:
       - name: helloworld
         image: eiximenis/go-hello-world
         ports:
           - containerPort: 80
-        volumeMounts:
-        - name: config-volume
-          mountPath: /data
+            name: http
+     

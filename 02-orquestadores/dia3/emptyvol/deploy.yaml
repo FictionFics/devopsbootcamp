@@ -16,14 +16,13 @@ spec:
         component: backend
     spec:
       volumes:
-      - name: config-volume 
-        configMap:
-          name: config          
+      - name: data
+        emptyDir: {}         
       containers:
       - name: helloworld
         image: eiximenis/go-hello-world
         ports:
           - containerPort: 80
         volumeMounts:
-        - name: config-volume
+        - name: data
           mountPath: /data
