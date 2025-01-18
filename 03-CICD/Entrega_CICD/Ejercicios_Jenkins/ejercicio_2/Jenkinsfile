@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'custom-gradle:6.6.1' // Name of the custom Docker image
+        DOCKERFILE_PATH = '03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_2/gradle.Dockerfile'
         PROJECT_PATH = '03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator'
     }
 
@@ -18,7 +19,7 @@ pipeline {
             steps {
                 echo 'Building the custom Gradle Docker image...'
                 script {
-                    docker.build(env.DOCKER_IMAGE, '-f gradle.Dockerfile .')
+                    docker.build(env.DOCKER_IMAGE, "-f ${env.DOCKERFILE_PATH} .")
                 }
             }
         }
