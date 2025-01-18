@@ -6,8 +6,12 @@ Esta parte del ejercicio se encuentra en `ejercicio_1/jenkins-resources` dentro 
 
 ![alt text](image.png)
 
+![alt text](image-3.png)
+
 ### 2. Modificar la pipeline para que utilice la imagen Docker de Gradle como build runner - OBLIGATORIO
 
-* Utilizar Docker in Docker a la hora de levantar Jenkins para realizar este ejercicio
-* Como plugins deben estar instalados `Docker` y `Docker Pipeline`
-* Usar la imagen de Docker `gradle:6.6.1-jre14-openj9`
+Esta parte del ejercicio se encuentra en `ejercicio_2`  he creado el Jenkinsfile donde realiza un build de la imagen que he puesto también en esta carpeta `gradle.Dockerfile`, realiza todos los pasos anteriores después de realizar el build de la imagen mencionada en el enunciado. Adjunto una imagen de el pipeline funcionando correctamente.
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
