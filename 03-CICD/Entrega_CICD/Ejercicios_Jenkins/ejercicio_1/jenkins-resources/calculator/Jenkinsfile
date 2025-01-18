@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PROJECT_PATH = '03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,23 +15,38 @@ pipeline {
 
         stage('Debug') {
             steps {
-                echo 'Listing directory contents...'
-                sh 'ls -l ./03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator'
+                echo 'Listing directory contents and current working directory...'
+                dir("${env.PROJECT_PATH}") {
+                    sh 'ls -l'
+                }
                 sh 'pwd'
+            }
+        }
+
+        stage('Prepare Environment') {
+            steps {
+                echo 'Setting permissions for gradlew...'
+                dir("${env.PROJECT_PATH}") {
+                    sh 'chmod +x ./gradlew'
+                }
             }
         }
 
         stage('Compile') {
             steps {
                 echo 'Compiling source code...'
-                sh './03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator/gradlew compileJava'
+                dir("${env.PROJECT_PATH}") {
+                    sh './gradlew compileJava'
+                }
             }
         }
 
         stage('Unit Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh './03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator/gradlew test'
+                dir("${env.PROJECT_PATH}") {
+                    sh './gradlew test'
+                }
             }
         }
     }
