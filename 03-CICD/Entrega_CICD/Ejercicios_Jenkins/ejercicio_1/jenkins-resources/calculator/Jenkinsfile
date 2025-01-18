@@ -12,29 +12,22 @@ pipeline {
         stage('Debug') {
             steps {
                 echo 'Listing directory contents...'
-                sh 'ls -l ejercicio_1/jenkins-resources/calculator'
+                sh 'ls -l ./'
                 sh 'pwd'
-            }
-        }
-
-        stage('Prepare Environment') {
-            steps {
-                echo 'Setting permissions for gradlew...'
-                sh 'chmod +x ejercicio_1/jenkins-resources/calculator/gradlew'
             }
         }
 
         stage('Compile') {
             steps {
                 echo 'Compiling source code...'
-                sh './ejercicio_1/jenkins-resources/calculator/gradlew compileJava'
+                sh './gradlew compileJava'
             }
         }
 
         stage('Unit Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh './ejercicio_1/jenkins-resources/calculator/gradlew test'
+                sh './gradlew test'
             }
         }
     }
