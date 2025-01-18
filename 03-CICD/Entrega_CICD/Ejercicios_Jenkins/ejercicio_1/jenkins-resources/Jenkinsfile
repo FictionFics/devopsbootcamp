@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Compilando código fuente...'
                 // Ejecutar el comando para compilar el código
-                sh './gradlew compileJava'
+                sh './calculator/gradlew compileJava'
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Ejecutando pruebas unitarias...'
                 // Ejecutar los tests unitarios
-                sh './gradlew test'
+                sh './calculator/gradlew test'
             }
         }
     }
