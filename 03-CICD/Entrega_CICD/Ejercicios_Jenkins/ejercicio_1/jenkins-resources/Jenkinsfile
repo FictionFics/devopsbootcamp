@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Clonando repositorio...'
+                // Descargar el código fuente
+                checkout scm
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                echo 'Compilando código fuente...'
+                // Ejecutar el comando para compilar el código
+                sh './gradlew compileJava'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                echo 'Ejecutando pruebas unitarias...'
+                // Ejecutar los tests unitarios
+                sh './gradlew test'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finalizado.'
+        }
+        success {
+            echo 'Pipeline ejecutado exitosamente.'
+        }
+        failure {
+            echo 'Pipeline falló.'
+        }
+    }
+}
