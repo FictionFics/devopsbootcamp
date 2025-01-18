@@ -4,38 +4,49 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clonando repositorio...'
-                // Descargar el código fuente
+                echo 'Cloning repository...'
                 checkout scm
+            }
+        }
+
+        stage('Prepare Environment') {
+            steps {
+                echo 'Changing to the correct directory...'
+                dir('ejercicio_1/jenkins-resources/calculator') {
+                    // Ensure `gradlew` has execution permissions
+                    sh 'chmod +x ./gradlew'
+                }
             }
         }
 
         stage('Compile') {
             steps {
-                echo 'Compilando código fuente...'
-                // Ejecutar el comando para compilar el código
-                sh './calculator/gradlew compileJava'
+                echo 'Compiling source code...'
+                dir('ejercicio_1/jenkins-resources/calculator') {
+                    sh './gradlew compileJava'
+                }
             }
         }
 
         stage('Unit Tests') {
             steps {
-                echo 'Ejecutando pruebas unitarias...'
-                // Ejecutar los tests unitarios
-                sh './calculator/gradlew test'
+                echo 'Running unit tests...'
+                dir('ejercicio_1/jenkins-resources/calculator') {
+                    sh './gradlew test'
+                }
             }
         }
     }
 
     post {
         always {
-            echo 'Pipeline finalizado.'
+            echo 'Pipeline execution completed.'
         }
         success {
-            echo 'Pipeline ejecutado exitosamente.'
+            echo 'Pipeline executed successfully.'
         }
         failure {
-            echo 'Pipeline falló.'
+            echo 'Pipeline failed.'
         }
     }
 }
