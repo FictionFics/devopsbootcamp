@@ -9,31 +9,32 @@ pipeline {
             }
         }
 
+        stage('Debug') {
+            steps {
+                echo 'Listing directory contents...'
+                sh 'ls -l ejercicio_1/jenkins-resources/calculator'
+                sh 'pwd'
+            }
+        }
+
         stage('Prepare Environment') {
             steps {
-                echo 'Changing to the correct directory...'
-                dir('ejercicio_1/jenkins-resources/calculator') {
-                    // Ensure `gradlew` has execution permissions
-                    sh 'chmod +x ./gradlew'
-                }
+                echo 'Setting permissions for gradlew...'
+                sh 'chmod +x ejercicio_1/jenkins-resources/calculator/gradlew'
             }
         }
 
         stage('Compile') {
             steps {
                 echo 'Compiling source code...'
-                dir('ejercicio_1/jenkins-resources/calculator') {
-                    sh './gradlew compileJava'
-                }
+                sh './ejercicio_1/jenkins-resources/calculator/gradlew compileJava'
             }
         }
 
         stage('Unit Tests') {
             steps {
                 echo 'Running unit tests...'
-                dir('ejercicio_1/jenkins-resources/calculator') {
-                    sh './gradlew test'
-                }
+                sh './ejercicio_1/jenkins-resources/calculator/gradlew test'
             }
         }
     }
