@@ -12,7 +12,7 @@ pipeline {
         stage('Debug') {
             steps {
                 echo 'Listing directory contents...'
-                sh 'ls -l ./'
+                sh 'ls -l ./03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator'
                 sh 'pwd'
             }
         }
