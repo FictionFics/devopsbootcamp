@@ -20,7 +20,7 @@ pipeline {
         stage('Compile') {
             steps {
                 echo 'Compiling source code...'
-                sh './03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator/gradlew tasks'
+                sh './03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator/gradlew compileJava'
             }
         }
 
