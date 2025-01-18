@@ -1,0 +1,60 @@
+pipeline {
+    agent {
+        docker {
+            image 'gradle:6.6.1-jre14-openj9'
+            args '--user root' // Ensures Gradle has necessary permissions
+        }
+    }
+
+    environment {
+        PROJECT_PATH = '03-CICD/Entrega_CICD/Ejercicios_Jenkins/ejercicio_1/jenkins-resources/calculator'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Cloning repository...'
+                checkout scm
+            }
+        }
+
+        stage('Debug') {
+            steps {
+                echo 'Listing directory contents...'
+                dir("${env.PROJECT_PATH}") {
+                    sh 'ls -l'
+                }
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                echo 'Compiling source code...'
+                dir("${env.PROJECT_PATH}") {
+                    sh './gradlew compileJava'
+                }
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                echo 'Running unit tests...'
+                dir("${env.PROJECT_PATH}") {
+                    sh './gradlew test'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        success {
+            echo 'Pipeline executed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}

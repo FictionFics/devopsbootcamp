@@ -2,13 +2,9 @@
 
 ### 1. CI/CD de una Java + Gradle - OBLIGATORIO
 
-En el directorio raíz de este [código fuente](./jenkins-resources), crea un `Jenkinsfile` que contenga una pipeline declarativa con los siguientes stages:
+Esta parte del ejercicio se encuentra en `ejercicio_1/jenkins-resources` dentro de la carpeta `calculator` he creado el Jenkinsfile con distintos valores, una cosa a considerar es que la versión de Java de Jenkins es la 17 y la que está ejecutando Gradle era la 8, y daba un fallo de versión al ejecutar el compilar Java, he tenido que cambiar en el fichero `gradle-wrapper.properties` el distributionURL, adjunto una foto del pipeline funcionando.
 
-* **Checkout**. Descarga de código desde un repositorio remoto, preferentemente utiliza GitHub
-* **Compile**. Compilar el código fuente utilizando `gradlew compileJava`
-* **Unit Tests**. Ejecutar los test unitarios utilizando `gradlew test`
-
-Para ejecutar Jenkins en local y tener las dependencias necesarias disponibles podemos contruir una imagen a partir de [este Dockerfile](./jenkins-resources/gradle.Dockerfile)
+![alt text](image.png)
 
 ### 2. Modificar la pipeline para que utilice la imagen Docker de Gradle como build runner - OBLIGATORIO
 
