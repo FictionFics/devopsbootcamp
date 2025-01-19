@@ -9,5 +9,5 @@ data:
   DB_USER: postgres
   DB_PASSWORD: password
   DB_PORT: "5432"
-  DB_NAME: todos
+  DB_NAME: todos_db
   DB_VERSION: "10.4"
