@@ -1,0 +1,35 @@
+name: CI for Hangman Frontend
+
+on:
+  pull_request:
+    paths:
+      - 'hangman-front/**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: ./hangman-front
+        run: npm ci
+
+      - name: Build project
+        working-directory: ./hangman-front
+        run: npm run build --if-present
+
+      - name: Run unit tests
+        working-directory: ./hangman-front
+        run: npm test
