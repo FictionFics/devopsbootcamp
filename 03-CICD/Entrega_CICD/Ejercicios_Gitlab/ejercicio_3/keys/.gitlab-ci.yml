@@ -1,0 +1,17 @@
+image: alpine
+
+stages:
+  - clone
+
+clone_springapp:
+  stage: clone
+  before_script:
+    - apk add --no-cache openssh git
+    - mkdir -p ~/.ssh
+    - echo "$SPRINGAPP_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan gitlab.local >> ~/.ssh/known_hosts
+  script:
+    - ssh -T git@gitlab.local || echo "SSH Connection failed"
+    - git clone git@gitlab.local:exercises_bootcamp/springapp.git
+    - ls -la springapp/

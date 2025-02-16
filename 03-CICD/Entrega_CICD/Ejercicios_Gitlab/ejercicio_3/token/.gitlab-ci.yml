@@ -1,0 +1,11 @@
+image: alpine
+
+stages:
+  - clone
+
+clone_springapp:
+  stage: clone
+  script:
+    - apk add --no-cache git
+    - git clone https://gitlab+deploy-token-2:${SPRINGAPP_DEPLOY_TOKEN}@gitlab.com/gitlab+deploy-token-2/springapp.git
+    - ls -la springapp/
